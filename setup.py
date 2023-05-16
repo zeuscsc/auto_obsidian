@@ -7,9 +7,10 @@ setup(
     description = 'Auto Generate Obsidian from your Exported Toby History',
     py_modules=["auto_obsidian"],
     packages = find_packages(),
+    package_dir = {'': 'auto_obsidian'},
     author="ZeusChiu",
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     install_requires = [
         "openai",
         "python-dotenv",
