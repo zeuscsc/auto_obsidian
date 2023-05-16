@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 setup(
     name = 'AutoObsidian',
     version = '0.1.0',
-    url = '',
-    description = '',
-    packages = find_packages(),
+    url = 'https://github.com/zeuscsc/auto_obsidian.git',
+    description = 'Auto Generate Obsidian from your Exported Toby History',
+    packages = find_packages(include=["*"]),
     install_requires = [
         "openai",
         "python-dotenv",
