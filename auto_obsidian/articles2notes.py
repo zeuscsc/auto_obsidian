@@ -8,43 +8,20 @@ from .yt2txt import extract_video_id
 NOTES_FOLDER = "obsidian_notes/markdown_notes"
 ARTICLES_INDEXES_JSON_FILE_PATH="articles_indexes.json"
 
-def get_notes_json_from_chat(article):
-    system="""You are a scholars that is taking markdown notes about some video, you would be giving some written scripts for the task.  
-You can also put down ![[image_path]] if you think we need extra image over there.
-Extract the key technology or algorithm as title.
-And summarize each paragraph with subtitle
-Please write the notes in markdown format.
-Output should be in json format where title in title field and paragraphs in note field.
-The note can be markdown string in note field.
-If there is more than one note, put thoes into an array which named "paragraphs" that have a format of "subtitle" and "paragraph"
-Here is an example:
-{
-"title": "Hidden Markov Model",
-"paragraphs": [
-{
-"subtitle": "Hidden Markov Model",
-"paragraph": "Hidden Markov models are known for their applications to thermodynamics, statistical mechanics, physics, chemistry, economics, finance, signal processing, information theory, pattern recognition - such as speech, handwriting, gesture recognition, part-of-speech tagging, musical score following, partial discharges and bioinformatics."
-},
-{
-"subtitle": "Those are the "definition" from wiki textbook.  So now what?",
-"paragraph": "Same as the [[Markov Chain]] chapter, lets get a better understanding from an example.  We will use the same example as that chapter.
-
-![[image_path]]
-
-The green lines are the [[#Markov Chain]] and the Red line points to the observation the numbers are the probility."
-}
-]
-}
-"""
-    assistant="""{"title":"""
-    user=article["text"]
-    responses=get_chats_responses(GPT3_MODEL,system,assistant,user)
-    return responses
 def get_notes_from_chat(article):
     system="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
 And summarize each paragraph with a title.
 Remember to keep the technology or algorithm name, very important.
 Please write the notes in markdown format.
+Here is an example:
+### Definiation
+A deadlock is a situation in which two computer programs sharing the same resource are effectively preventing each other from accessing the resource, resulting in both programs ceasing to function. 
+The earliest computer operating systems ran only one program at a time.
+
+### What it have to do with Relationsal Database ManagementSystem
+In a database, a deadlock is an unwanted situation in which two or more transactions are waiting indefinitely for one another to give up locks. 
+Deadlock is said to be one of the most feared complications in DBMS as it brings the whole system to a Halt. 
+When you tries to insert or update data on database, sometime your record need to depend on the row record.  
 """
     assistant="#### "
     user=article["text"]
