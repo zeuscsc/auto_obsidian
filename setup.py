@@ -5,9 +5,11 @@ setup(
     version = '0.1.0',
     url = 'https://github.com/zeuscsc/auto_obsidian.git',
     description = 'Auto Generate Obsidian from your Exported Toby History',
-    packages = ["auto_obsidian"],
+    py_modules=["auto_obsidian"],
+    packages = find_packages(),
     author="ZeusChiu",
     include_package_data=True,
+    python_requires=">=3.8",
     install_requires = [
         "openai",
         "python-dotenv",
