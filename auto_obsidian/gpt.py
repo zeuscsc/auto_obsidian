@@ -1,12 +1,9 @@
 import openai
-from dotenv import load_dotenv
 import os
 import json
 import datetime
 from time import sleep
 import re
-
-load_dotenv()
 
 GPT3_MODEL = "gpt-3.5-turbo"
 GPT4_MODEL = "gpt-4"

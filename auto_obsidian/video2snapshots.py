@@ -4,7 +4,7 @@ import os
 import glob
 import cv2
 
-from auto_obsidian.ytdl import VIDEOS_FOLDER,extract_video_id
+from ytdl import VIDEOS_FOLDER,extract_video_id
 
 SNAPSHOTS_FOLDER = "obsidian_notes/snapshots"
 

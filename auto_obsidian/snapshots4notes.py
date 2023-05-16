@@ -2,9 +2,9 @@ from sentence_transformers import SentenceTransformer
 import os
 from scipy import spatial
 
-from auto_obsidian.ytdl import extract_video_id
-from auto_obsidian.video2snapshots import SNAPSHOTS_FOLDER,extract_snapshot,load_video,unload_video,get_snapshot_time,get_snapshot_path
-from auto_obsidian.articles2notes import get_note_path,load_articles_indexes,load_article,save_articles_indexes
+from ytdl import extract_video_id
+from video2snapshots import SNAPSHOTS_FOLDER,extract_snapshot,load_video,unload_video,get_snapshot_time,get_snapshot_path
+from articles2notes import get_note_path,load_articles_indexes,load_article,save_articles_indexes
 
 def initialize():
     load_model()

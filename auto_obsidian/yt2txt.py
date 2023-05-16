@@ -6,7 +6,7 @@ import torch
 import glob
 import json
 
-from auto_obsidian.ytdl import extract_video_id, download,VIDEOS_FOLDER
+from ytdl import extract_video_id, download,VIDEOS_FOLDER
 
 AUDIO_FOLDER = "audios"
 ARTICLES_FOLDER = "articles"

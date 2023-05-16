@@ -2,8 +2,8 @@ import json
 import re
 import os
 
-from auto_obsidian.gpt import get_chat_response,get_chats_responses,GPT3_MODEL
-from auto_obsidian.yt2txt import extract_video_id
+from gpt import get_chat_response,get_chats_responses,GPT3_MODEL
+from yt2txt import extract_video_id
 
 NOTES_FOLDER = "obsidian_notes/markdown_notes"
 ARTICLES_INDEXES_JSON_FILE_PATH="articles_indexes.json"
