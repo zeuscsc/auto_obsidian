@@ -5,8 +5,7 @@ setup(
     version = '0.1.0',
     url = 'https://github.com/zeuscsc/auto_obsidian.git',
     description = 'Auto Generate Obsidian from your Exported Toby History',
-    packages = find_packages(),
-    py_modules=["auto_obsidian"],
+    packages = ["articles2notes","snapshots4notes","yt2txt","ytdl","obsidian_notes_generator","video2snapshots"],
     author="ZeusChiu",
     include_package_data=True,
     install_requires = [
