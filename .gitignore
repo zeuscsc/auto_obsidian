@@ -1,0 +1,11 @@
+__pycache__
+audios
+videos
+sites_cards_backup
+.env
+temp
+notes_backup
+obsidian_notes
+articles
+articles_indexes.json
+*.exe

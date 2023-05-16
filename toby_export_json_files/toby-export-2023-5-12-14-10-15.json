@@ -1,0 +1,109 @@
+{
+    "version": 3,
+    "lists": [
+        {
+            "title": "YoutubeTech News",
+            "cards": [
+                {
+                    "title": "(97) NVIDIA’s New Video AI: Game Changer! - YouTube",
+                    "url": "https://www.youtube.com/watch?v=3A3OuTdsPEk",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(95) Two Minute Papers - YouTube",
+                    "url": "https://www.youtube.com/@TwoMinutePapers/videos",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(95) Microsoft’s New AI Clones Your Voice In 3 Seconds! - YouTube",
+                    "url": "https://www.youtube.com/watch?v=F6HSsVIkqIU",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(95) CLONE ANY VOICE WITH AI (GOOGLE COLAB) | 3 MINUTE TORTOISE-TTS TUTORIAL - YouTube",
+                    "url": "https://www.youtube.com/watch?v=7SXuFVCIqS4",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(95) NVIDIA Introduces No Code Instant NeRF! - YouTube",
+                    "url": "https://www.youtube.com/watch?v=TA14yYBIRP8&t=93s",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(95) StableVicuna is NOW the UNSTOPPABLE 13B LLM KING! Bye Vicuna! - YouTube",
+                    "url": "https://www.youtube.com/watch?v=QeBmeHg8s5Y",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(97) Diffusion models from scratch in PyTorch - YouTube",
+                    "url": "https://www.youtube.com/watch?v=a4Yfz2FxXiY",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/a3aebd16/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "Movie to Mesh 3d (Photogrammetry) - YouTube",
+                    "url": "https://www.youtube.com/watch?v=3-_s2SCXh7s",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(132) Is Modern Feminism Hurting Men? - YouTube",
+                    "url": "https://www.youtube.com/watch?v=4XRLk9Btjcs",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(142) Build Your Own Auto-GPT Apps with LangChain (Python Tutorial) - YouTube",
+                    "url": "https://www.youtube.com/watch?v=NYSWn1ipbgg",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(142) DeepFindr - YouTube",
+                    "url": "https://www.youtube.com/@DeepFindr/videos",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "[CVPR 2022] Light Field Neural Rendering - YouTube",
+                    "url": "https://www.youtube.com/watch?v=D9w8mFDvHsQ",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(142) Google大進化! 寫作修圖全都會 谷歌開發全新產品對決ChatGPT 谷歌Bard開放180國使用 │記者 許庭瑋│【國際大現場】20230511│三立新聞台 - YouTube",
+                    "url": "https://www.youtube.com/watch?v=V-npFYRpqp4",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                },
+                {
+                    "title": "(142) Will NeRFs Replace Photogrammetry? - Computer Vision Decoded Ep. 6 - YouTube",
+                    "url": "https://www.youtube.com/watch?v=nyi3SVxUjOY",
+                    "favIconUrl": "https://www.youtube.com/s/desktop/cbc86408/img/favicon_32x32.png",
+                    "customTitle": "",
+                    "customDescription": ""
+                }
+            ],
+            "labels": []
+        }
+    ]
+}
