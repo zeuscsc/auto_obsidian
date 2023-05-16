@@ -1,5 +1,4 @@
 openai
-python-dotenv
 sentence-transformers
 spacy
 opencv-python

@@ -12,7 +12,6 @@ setup(
     python_requires=">=3.9",
     install_requires = [
         "openai",
-        "python-dotenv",
         "sentence-transformers",
         "spacy",
         "opencv-python",

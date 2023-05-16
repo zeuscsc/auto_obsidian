@@ -76,9 +76,11 @@ def extract_title_from_md(md:str):
     else:
         return None
 def check_if_notes_done(article_index):
+    url=article_index["url"]
+    video_id=extract_video_id(url)
     if "note_name" in article_index and article_index["note_name"] is not None:
         file_name=article_index["note_name"]
-        md_file_path=get_note_path(article_index["video_id"],file_name)
+        md_file_path=get_note_path(video_id,file_name)
         if os.path.isfile(md_file_path):
             with open(md_file_path, "r",encoding="utf8") as md_file:
                 content=md_file.read()

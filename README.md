@@ -16,13 +16,12 @@ pip install -r requirements.txt
 ~~~shell
 conda install -c conda-forge charset-normalizer
 ~~~
-## Usage
-First export your youtube links from Toby as json file,put it on root directory and name it articles_indexes.json then run:
+## Set Environment Variables
 ~~~shell
-python yt2txt.py
+set OPENAI_API_KEY={your openai key}
+set TECKY_API_KEY={your tecky key}
 ~~~
-This will downlaod all the videos and convert them to json files.
-Then run:
+## Usage
 ~~~shell
-python obsidian_notes_generator.py
+python auto_obsidian
 ~~~
