@@ -1,8 +1,8 @@
 import json
 import re
 import os
-import datetime
 from gpt import get_chat_response,get_chats_responses,GPT3_MODEL
+from yt2txt import extract_video_id
 
 NOTES_FOLDER = "obsidian_notes/markdown_notes"
 ARTICLES_INDEXES_JSON_FILE_PATH="articles_indexes.json"
@@ -108,14 +108,16 @@ def generate():
         article_title=str(article_index["title"])
         print(f"Generating: {article_title}...")
         article = load_article(article_index)
+        url=article["url"]
+        video_id=extract_video_id(url)
         md_note_content=get_notes_from_chat(article)
         title=get_title_from_notes(md_note_content)
         obsidian_title=article_title.replace("[","").replace("]","")
         md_note=f"# {title}\n{md_note_content}"
         md_note+="\n\n"
-        md_note+=f"Source: [{obsidian_title}]({article['url']})\n"
+        md_note+=f"Source: [{obsidian_title}]({url})\n"
         file_name=title.replace("# ","")
-        md_file_path=get_note_path(article_index["video_id"],file_name)
+        md_file_path=get_note_path(video_id,file_name)
         os.makedirs(NOTES_FOLDER, exist_ok=True)
         print(f"Saving: {md_file_path}...")
         with open(md_file_path, "w",encoding="utf8") as md_file:

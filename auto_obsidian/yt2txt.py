@@ -62,9 +62,12 @@ def speech2text(cards:list[SiteCard]):
         url=card.url
         video_id = extract_video_id(url)
         if video_id is not None:
+            file_path=f"{ARTICLES_FOLDER}/{video_id}.json"
+            if os.path.exists(file_path):
+                print(f"Skipping {file_path} because it already exists")
+                continue
             print(f"Transcribing: {title}...")
             result = model.transcribe(get_audio_path(video_id))
-            file_path=f"{ARTICLES_FOLDER}/{video_id}.json"
             article_index={"title":title,"url":url,"file_path":file_path}
             articles_indexes[video_id]=article_index
             article = dict(article_index, **result)
