@@ -2,8 +2,9 @@ import json
 import subprocess
 import os
 import glob
-from ytdl import VIDEOS_FOLDER,extract_video_id
 import cv2
+
+from auto_obsidian.ytdl import VIDEOS_FOLDER,extract_video_id
 
 SNAPSHOTS_FOLDER = "obsidian_notes/snapshots"
 

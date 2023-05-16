@@ -1,11 +1,12 @@
 import json
 import os
 import subprocess
-from ytdl import extract_video_id, download,VIDEOS_FOLDER
 import whisper
 import torch
 import glob
 import json
+
+from auto_obsidian.ytdl import extract_video_id, download,VIDEOS_FOLDER
 
 AUDIO_FOLDER = "audios"
 ARTICLES_FOLDER = "articles"
