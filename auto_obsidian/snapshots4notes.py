@@ -1,7 +1,5 @@
 from sentence_transformers import SentenceTransformer
-import torch
 import os
-import json
 from video2snapshots import SNAPSHOTS_FOLDER,extract_snapshot,load_video,unload_video,get_snapshot_time,get_snapshot_path
 from articles2notes import get_note_path,load_articles_indexes,load_article,save_articles_indexes
 from scipy import spatial
