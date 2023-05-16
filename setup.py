@@ -14,6 +14,12 @@ REQUIRES_PYTHON = '>=3.9.0'
 VERSION = '0.1.0'
 
 REQUIRED = [
+"openai",
+"sentence-transformers",
+"spacy",
+"opencv-python",
+"yt-dlp",
+"openai-whisper",
 ]
 
 EXTRAS = {
