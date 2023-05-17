@@ -5,8 +5,9 @@ import glob
 import cv2
 
 from .ytdl import VIDEOS_FOLDER,extract_video_id
+from .articles2notes import OBSIDIAN_FOLDER
 
-SNAPSHOTS_FOLDER = "obsidian_notes/snapshots"
+SNAPSHOTS_FOLDER = f"{OBSIDIAN_FOLDER}/snapshots"
 
 def get_file_in_directory(filename_without_extension:str):
     matching_files = glob.glob(f"{VIDEOS_FOLDER}/{filename_without_extension}.*")
@@ -59,21 +60,9 @@ def extract_snapshot(video_id:str,start:float,end:float):
     os.makedirs(f"{SNAPSHOTS_FOLDER}/{video_id}", exist_ok=True)
     cv2.imwrite(snapshot_file_path, frame)
     return snapshot_file_path
+def get_relative_image_path(snapshot_file_path:str):
+    return snapshot_file_path.replace(f"{OBSIDIAN_FOLDER}/", "")
 
-# def extract_snapshot(video_id:str, start:float, end:float,overwrite=False):
-#     snapshot_time=start+((end-start)/2)
-#     os.makedirs(SNAPSHOTS_FOLDER, exist_ok=True)
-#     video_file_path=get_file_in_directory(video_id)
-#     os.makedirs(f"{SNAPSHOTS_FOLDER}/{video_id}", exist_ok=True)
-#     snapshot_time_str=convert_seconds_to_time(snapshot_time)
-#     snapshot_time_str4file=snapshot_time_str.replace(":","-")
-#     snapshot_file_name=f"{SNAPSHOTS_FOLDER}/{video_id}/{snapshot_time_str4file}.png"
-#     if overwrite:
-#         command=f"ffmpeg -i {video_file_path} -ss {snapshot_time_str} -vframes 1 -y {snapshot_file_name}"
-#     else:
-#         command=f"ffmpeg -i {video_file_path} -ss {snapshot_time_str} -vframes 1 -n {snapshot_file_name}"
-#     subprocess.call(command, shell=True)
-#     return snapshot_file_name
 def extract_all():
     os.makedirs(SNAPSHOTS_FOLDER, exist_ok=True)
     articles_indexes_json_file_path = "./articles_indexes.json"

@@ -55,27 +55,30 @@ def extract_audios():
         subprocess.call(command, shell=True)
     pass
 def speech2text(cards:list[SiteCard]):
+    from .articles2notes import save_articles_indexes,load_articles_indexes
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = whisper.load_model("medium.en").to(device)
-    articles_indexes=dict()
+    articles_indexes=load_articles_indexes()
+    if articles_indexes is None:
+        articles_indexes=dict()
     for card in cards:
         title=card.title
         url=card.url
         video_id = extract_video_id(url)
         if video_id is not None:
             file_path=f"{ARTICLES_FOLDER}/{video_id}.json"
+            if video_id not in articles_indexes:
+                article_index={"title":title,"url":url,"file_path":file_path}
+                articles_indexes[video_id]=article_index
+                save_articles_indexes(articles_indexes)
             if os.path.exists(file_path):
                 print(f"Skipping {file_path} because it already exists")
                 continue
             print(f"Transcribing: {title}...")
             result = model.transcribe(get_audio_path(video_id))
-            article_index={"title":title,"url":url,"file_path":file_path}
-            articles_indexes[video_id]=article_index
             article = dict(article_index, **result)
             with open(file_path, "w",encoding="utf8") as json_file:
                 json.dump(article, json_file, indent=4)
-            with open("articles_indexes.json", "w",encoding="utf8") as json_file:
-                json.dump(articles_indexes, json_file, indent=4)
     pass
 if __name__ == "__main__":
     sites_cards=get_sites_cards()
