@@ -1,6 +1,7 @@
 from yt2txt import download_youtube_videos,extract_audios,get_sites_cards,speech2text
 from articles2notes import generate as generate_notes
 from snapshots4notes import match_notes_with_speeches, initialize as initialize_snapshots
+from links4notes import link_all_notes
 
 if __name__ == '__main__':
     sites_cards=get_sites_cards()
@@ -10,3 +11,4 @@ if __name__ == '__main__':
     generate_notes()
     initialize_snapshots()
     match_notes_with_speeches()
+    link_all_notes()

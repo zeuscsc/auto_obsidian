@@ -1,7 +1,6 @@
 import json
 import os
 import subprocess
-import whisper
 import torch
 import glob
 import json
@@ -10,6 +9,15 @@ from .ytdl import extract_video_id, download,VIDEOS_FOLDER
 
 AUDIO_FOLDER = "audios"
 ARTICLES_FOLDER = "articles"
+
+model=None
+
+def load_model():
+    global model
+    if model is None:
+        import whisper
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = whisper.load_model("medium.en").to(device)
 class SiteCard:
     title:str
     url:str
@@ -56,8 +64,6 @@ def extract_audios():
     pass
 def speech2text(cards:list[SiteCard]):
     from .articles2notes import save_articles_indexes,load_articles_indexes
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = whisper.load_model("medium.en").to(device)
     articles_indexes=load_articles_indexes()
     if articles_indexes is None:
         articles_indexes=dict()
@@ -75,6 +81,7 @@ def speech2text(cards:list[SiteCard]):
                 print(f"Skipping {file_path} because it already exists")
                 continue
             print(f"Transcribing: {title}...")
+            global model
             result = model.transcribe(get_audio_path(video_id))
             article = dict(article_index, **result)
             with open(file_path, "w",encoding="utf8") as json_file:
