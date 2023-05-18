@@ -49,8 +49,8 @@ Here is an example:
 def get_files_in_directory(directory):
     return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 def get_note_path(video_id:str,note_name:str):
-    os.makedirs(f"{NOTES_FOLDER}", exist_ok=True)
-    return f"{NOTES_FOLDER}/{note_name}.md"
+    os.makedirs(f"{NOTES_FOLDER}/{note_name} - ({video_id})", exist_ok=True)
+    return f"{NOTES_FOLDER}/{note_name} - ({video_id})/{note_name}.md"
 def get_backup_note_path(video_id:str,note_name:str):
     os.makedirs(f"{NOTES_BACKUP_FOLDER}/{video_id}", exist_ok=True)
     return f"{NOTES_BACKUP_FOLDER}/{video_id}/{note_name}.md"
@@ -121,14 +121,14 @@ def generate():
             video_id=extract_video_id(url)
             md_file_path=get_note_path(video_id,file_name)
             md_backup_file_path=get_backup_note_path(video_id,file_name)
-            if os.path.isfile(md_file_path):
-                print(f"Appending: {md_file_path}...")
-                with open(md_file_path, "a",encoding="utf8") as md_file:
-                    md_file.write(md_note)
-            else:
-                print(f"Saving: {md_file_path}...")
-                with open(md_file_path, "w",encoding="utf8") as md_file:
-                    md_file.write(md_note)
+            # if os.path.isfile(md_file_path):
+            #     print(f"Appending: {md_file_path}...")
+            #     with open(md_file_path, "a",encoding="utf8") as md_file:
+            #         md_file.write(md_note)
+            # else:
+            print(f"Saving: {md_file_path}...")
+            with open(md_file_path, "w",encoding="utf8") as md_file:
+                md_file.write(md_note)
             # with open(md_backup_file_path, "w",encoding="utf8") as md_file:
             #     md_file.write(md_note)
             article_index["note_name"]=file_name
