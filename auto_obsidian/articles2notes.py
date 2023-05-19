@@ -2,13 +2,9 @@ import json
 import re
 import os
 
+from .folders import NOTES_FOLDER,ARTICLES_INDEXES_JSON_FILE_PATH
 from .gpt import get_chat_response,GPT4_MODEL
 from .yt2txt import extract_video_id
-
-OBSIDIAN_FOLDER = "obsidian_notes"
-NOTES_FOLDER = f"{OBSIDIAN_FOLDER}/markdown_notes"
-NOTES_BACKUP_FOLDER = "notes_backup/markdown_notes"
-ARTICLES_INDEXES_JSON_FILE_PATH="articles_indexes.json"
 
 def get_notes_from_chat(article:dict):
     system="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
@@ -49,9 +45,6 @@ def get_files_in_directory(directory):
     return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 def get_note_path(video_id:str,note_name:str):
     return f"{NOTES_FOLDER}/{note_name} - ({video_id})/{note_name}.md"
-def get_backup_note_path(video_id:str,note_name:str):
-    os.makedirs(f"{NOTES_BACKUP_FOLDER}/{video_id}", exist_ok=True)
-    return f"{NOTES_BACKUP_FOLDER}/{video_id}/{note_name}.md"
 def extract_title_from_md(md:str):
     first_line = md.strip().split('\n', 1)[0]
     title_match = re.match(r'^# (.+)$', first_line)
@@ -118,7 +111,6 @@ def generate():
         if is_valid_filename(file_name):
             video_id=extract_video_id(url)
             md_file_path=get_note_path(video_id,file_name)
-            md_backup_file_path=get_backup_note_path(video_id,file_name)
             # if os.path.isfile(md_file_path):
             #     print(f"Appending: {md_file_path}...")
             #     with open(md_file_path, "a",encoding="utf8") as md_file:

@@ -3,12 +3,8 @@ import os
 import glob
 import cv2
 
-from .ytdl import VIDEOS_FOLDER,extract_video_id
-from .articles2notes import OBSIDIAN_FOLDER
+from .folders import SNAPSHOTS_FOLDER,OBSIDIAN_FOLDER,VIDEOS_FOLDER
 from .img4qna import get_answer,object_decision
-from .img2class import object_detection
-
-SNAPSHOTS_FOLDER = f"{OBSIDIAN_FOLDER}/snapshots"
 
 video=None
 

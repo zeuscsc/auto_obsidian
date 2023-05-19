@@ -3,7 +3,7 @@ import os
 import re
 import glob
 
-VIDEOS_FOLDER = "videos"
+from .folders import VIDEOS_FOLDER
 
 def get_file_in_directory(filename_without_extension:str):
     matching_files = glob.glob(f"{VIDEOS_FOLDER}/{filename_without_extension}.*")

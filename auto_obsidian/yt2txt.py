@@ -5,11 +5,11 @@ import torch
 import glob
 import json
 
-from .ytdl import extract_video_id, download,VIDEOS_FOLDER
+from .folders import VIDEOS_FOLDER,ARTICLES_FOLDER,AUDIO_FOLDER
+from .ytdl import extract_video_id, download
 
-AUDIO_FOLDER = "audios"
-ARTICLES_FOLDER = "articles"
-WHISPER_MODEL_NAME="medium"
+LARGE_WHISPER_MODEL_NAME="large"
+MEDIUM_WHISPER_MODEL_NAME="medium"
 
 model=None
 
@@ -18,7 +18,11 @@ def load_model():
     if model is None:
         import whisper
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        model = whisper.load_model(WHISPER_MODEL_NAME).to(device)
+        try:
+            model = whisper.load_model(LARGE_WHISPER_MODEL_NAME).to(device)
+        except:
+            print("Failed to load large model, fallback to loading medium model...")
+            model=whisper.load_model(MEDIUM_WHISPER_MODEL_NAME).to(device)
     return model
 class SiteCard:
     title:str

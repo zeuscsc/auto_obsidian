@@ -2,8 +2,9 @@ from sentence_transformers import SentenceTransformer
 import os
 from scipy import spatial
 
+from .folders import SNAPSHOTS_FOLDER
 from .ytdl import extract_video_id
-from .video2snapshots import SNAPSHOTS_FOLDER,save_snapshot,load_video,unload_video,get_relative_image_path
+from .video2snapshots import save_snapshot,load_video,unload_video,get_relative_image_path
 from .articles2notes import get_note_path,load_articles_indexes,load_article,save_articles_indexes
 
 def initialize():
@@ -29,9 +30,9 @@ def add_snapshot4notes_with_speeches():
     articles_indexes=load_articles_indexes()
     for key in articles_indexes:
         article_index=articles_indexes[key]
-        # if "done" in article_index:
-        #     if article_index["done"]==True:
-        #         continue
+        if "done" in article_index:
+            if article_index["done"]==True:
+                continue
         video_id=extract_video_id(article_index["url"])
         load_video(video_id)
         article=load_article(article_index)

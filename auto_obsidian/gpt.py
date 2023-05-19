@@ -7,11 +7,12 @@ import re
 import hashlib
 import glob
 
+from .folders import CHAT_CACHE_FOLDER
+
 GPT3_MODEL = "gpt-3.5-turbo"
 GPT4_MODEL = "gpt-4"
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 TECKY_API_KEY = os.environ.get('TECKY_API_KEY')
-CHAT_CACHE_FOLDER = "./chat_cache"
 
 gpt_error_delay=2
 
