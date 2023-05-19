@@ -20,6 +20,7 @@ REQUIRED = [
 "opencv-python",
 "yt-dlp",
 "openai-whisper",
+"inflect",
 ]
 
 EXTRAS = {

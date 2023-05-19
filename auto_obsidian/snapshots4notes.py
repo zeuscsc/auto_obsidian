@@ -24,7 +24,7 @@ def save_note(video_id,note_name,note):
 
 def get_sentence_embedding(sentences:list[str]):
     return model.encode(sentences)
-def match_notes_with_speeches():
+def add_snapshot4notes_with_speeches():
     os.makedirs(SNAPSHOTS_FOLDER, exist_ok=True)
     articles_indexes=load_articles_indexes()
     for key in articles_indexes:
@@ -86,4 +86,4 @@ def match_notes_with_speeches():
 
 if __name__ == "__main__":
     initialize()
-    match_notes_with_speeches()
+    add_snapshot4notes_with_speeches()

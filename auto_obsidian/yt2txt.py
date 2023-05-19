@@ -9,6 +9,7 @@ from .ytdl import extract_video_id, download,VIDEOS_FOLDER
 
 AUDIO_FOLDER = "audios"
 ARTICLES_FOLDER = "articles"
+WHISPER_MODEL_NAME="medium"
 
 model=None
 
@@ -17,7 +18,8 @@ def load_model():
     if model is None:
         import whisper
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        model = whisper.load_model("medium.en").to(device)
+        model = whisper.load_model(WHISPER_MODEL_NAME).to(device)
+    return model
 class SiteCard:
     title:str
     url:str
@@ -80,8 +82,8 @@ def speech2text(cards:list[SiteCard]):
             if os.path.exists(file_path):
                 print(f"Skipping {file_path} because it already exists")
                 continue
+            model=load_model()
             print(f"Transcribing: {title}...")
-            global model
             result = model.transcribe(get_audio_path(video_id))
             article = dict(article_index, **result)
             with open(file_path, "w",encoding="utf8") as json_file:

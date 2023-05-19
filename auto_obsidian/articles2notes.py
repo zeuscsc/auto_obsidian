@@ -2,7 +2,7 @@ import json
 import re
 import os
 
-from .gpt import get_chat_response,GPT3_MODEL
+from .gpt import get_chat_response,GPT4_MODEL
 from .yt2txt import extract_video_id
 
 OBSIDIAN_FOLDER = "obsidian_notes"
@@ -29,14 +29,13 @@ When you tries to insert or update data on database, sometime your record need t
     user=str(article["text"])
     if len(user.split())<50:
         return None
-    response=get_chat_response(GPT3_MODEL,system,assistant,user)
+    response=get_chat_response(GPT4_MODEL,system,assistant,user)
     return response
 def get_title_from_notes(article:str):
     system="""You are a scholars that is taking markdown notes about some video, you would be giving some written scripts for the task.
 You have finished writing the notes, and you want to extract the title from the notes.
 The title should only be the name of the technology or algorithm, no extra words needed.
-Please write the notes in markdown format. And since the title will also be use as the file name, please make sure the title is a valid file name.
-No special characters allowed for the title.  Make sure the title is within 10 words.
+Please write the notes in markdown format. No need to write "Title:" for the Title. Make sure the title is within 10 words.
 Here is an example:
 ## Hidden Markov Model
 """
@@ -44,12 +43,11 @@ Here is an example:
     user=article
     if len(user.split())<10:
         return None
-    response=get_chat_response(GPT3_MODEL,system,assistant,user)
-    return response
+    response=get_chat_response(GPT4_MODEL,system,assistant,user)
+    return str(response).replace(":"," - ")
 def get_files_in_directory(directory):
     return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
 def get_note_path(video_id:str,note_name:str):
-    os.makedirs(f"{NOTES_FOLDER}/{note_name} - ({video_id})", exist_ok=True)
     return f"{NOTES_FOLDER}/{note_name} - ({video_id})/{note_name}.md"
 def get_backup_note_path(video_id:str,note_name:str):
     os.makedirs(f"{NOTES_BACKUP_FOLDER}/{video_id}", exist_ok=True)
@@ -109,14 +107,14 @@ def generate():
         md_note_content=get_notes_from_chat(article)
         if md_note_content is None:
             continue
-        title=get_title_from_notes(md_note_content)
+        title=str(get_title_from_notes(md_note_content))
         if title is None:
             continue
         obsidian_title=article_title.replace("[","").replace("]","")
         md_note=f"# {title}\n{md_note_content}"
         md_note+="\n\n"
         md_note+=f"Source: [{obsidian_title}]({url})\n"
-        file_name=title.replace("# ","")
+        file_name=title.replace("# ","").replace("#","")
         if is_valid_filename(file_name):
             video_id=extract_video_id(url)
             md_file_path=get_note_path(video_id,file_name)
@@ -127,6 +125,7 @@ def generate():
             #         md_file.write(md_note)
             # else:
             print(f"Saving: {md_file_path}...")
+            os.makedirs(os.path.dirname(md_file_path), exist_ok=True)
             with open(md_file_path, "w",encoding="utf8") as md_file:
                 md_file.write(md_note)
             # with open(md_backup_file_path, "w",encoding="utf8") as md_file:

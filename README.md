@@ -17,9 +17,20 @@ pip install -r requirements.txt
 conda install -c conda-forge charset-normalizer
 ~~~
 ## Set Environment Variables
-~~~shell
-set OPENAI_API_KEY={your openai key}
-set TECKY_API_KEY={your tecky key}
+~~~shell Unix
+export OPENAI_API_KEY=your openai key
+export TECKY_API_KEY=your tecky key
+# Example
+export OPENAI_API_KEY=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
+export TECKY_API_KEY=12a34567-bc89-1011-12de-1234567x1234
+~~~
+
+~~~shell Windows
+$ENV:TECKY_API_KEY="your openai key"
+$ENV:OPENAI_API_KEY="your tecky key"
+# Example
+export OPENAI_API_KEY="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"
+export TECKY_API_KEY="12a34567-bc89-1011-12de-1234567x1234"
 ~~~
 ## Usage
 ~~~shell

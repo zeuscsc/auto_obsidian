@@ -4,3 +4,4 @@ spacy
 opencv-python
 yt-dlp
 openai-whisper
+inflect
