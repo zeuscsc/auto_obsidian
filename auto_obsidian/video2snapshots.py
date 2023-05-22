@@ -3,7 +3,7 @@ import os
 import glob
 import cv2
 
-from .folders import SNAPSHOTS_FOLDER,OBSIDIAN_FOLDER,VIDEOS_FOLDER
+from .folders import SNAPSHOTS_FOLDER,VIDEOS_FOLDER,OBSIDIAN_FOLDER_NAME
 from .img4qna import get_answer,object_decision
 
 video=None
@@ -99,7 +99,7 @@ def save_snapshot(video_id:str,start:int,end:int):
     frame.save(snapshot_file_path)
     return start,snapshot_file_path
 def get_relative_image_path(snapshot_file_path:str):
-    return snapshot_file_path.replace(f"{OBSIDIAN_FOLDER}/", "")
+    return snapshot_file_path.replace(f"{OBSIDIAN_FOLDER_NAME}/", "").replace("./", "")
 
 def is_good_note_snapshot(frame:Image):
     if frame is None:

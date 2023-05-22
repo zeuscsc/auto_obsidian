@@ -1,5 +1,4 @@
 import os
-ROOT_FOLDER=os.path.dirname(os.path.abspath(__file__))
 OBSIDIAN_FOLDER_NAME = "obsidian_notes"
 
 def reset_root_folder(path:str):
@@ -19,3 +18,5 @@ def reset_root_folder(path:str):
     ARTICLES_INDEXES_JSON_FILE_PATH=f"{ROOT_FOLDER}/articles_indexes.json"
     SNAPSHOTS_FOLDER = f"{ROOT_FOLDER}/{OBSIDIAN_FOLDER_NAME}/snapshots"
     CHAT_CACHE_FOLDER = f"{ROOT_FOLDER}/chat_cache"
+
+reset_root_folder("./")

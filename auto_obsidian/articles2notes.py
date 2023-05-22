@@ -104,7 +104,7 @@ def generate():
         if title is None:
             continue
         obsidian_title=article_title.replace("[","").replace("]","")
-        md_note=f"# {title}\n{md_note_content}"
+        md_note=f"{title}\n{md_note_content}"
         md_note+="\n\n"
         md_note+=f"Source: [{obsidian_title}]({url})\n"
         file_name=title.replace("# ","").replace("#","")
