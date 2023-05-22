@@ -111,17 +111,10 @@ def generate():
         if is_valid_filename(file_name):
             video_id=extract_video_id(url)
             md_file_path=get_note_path(video_id,file_name)
-            # if os.path.isfile(md_file_path):
-            #     print(f"Appending: {md_file_path}...")
-            #     with open(md_file_path, "a",encoding="utf8") as md_file:
-            #         md_file.write(md_note)
-            # else:
             print(f"Saving: {md_file_path}...")
             os.makedirs(os.path.dirname(md_file_path), exist_ok=True)
             with open(md_file_path, "w",encoding="utf8") as md_file:
                 md_file.write(md_note)
-            # with open(md_backup_file_path, "w",encoding="utf8") as md_file:
-            #     md_file.write(md_note)
             article_index["note_name"]=file_name
             articles_indexes[key]=article_index
             save_articles_indexes(articles_indexes)
