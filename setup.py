@@ -21,6 +21,8 @@ REQUIRED = [
 "yt-dlp",
 "openai-whisper",
 "inflect",
+"psutil",
+"pynvml",
 ]
 
 EXTRAS = {

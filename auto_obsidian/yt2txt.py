@@ -9,18 +9,79 @@ from .folders import VIDEOS_FOLDER,ARTICLES_FOLDER,AUDIO_FOLDER
 from .ytdl import extract_video_id, download
 
 LARGE_WHISPER_MODEL_NAME="large"
-MEDIUM_WHISPER_MODEL_NAME="medium"
+MEDIUM_WHISPER_MODEL_NAME="medium.en"
 
 model=None
 
+import pynvml
+
+def get_gpu_vram():
+    """Get information about GPU vRAM."""
+    try:
+        # Initialize NVML
+        pynvml.nvmlInit()
+
+        # Get the number of GPUs
+        device_count = pynvml.nvmlDeviceGetCount()
+
+        if device_count > 0:
+            # Get the handle of the first GPU
+            handle = pynvml.nvmlDeviceGetHandleByIndex(0)
+
+            # Get the memory info
+            mem_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+            total_vram = mem_info.total
+            used_vram = mem_info.used
+            free_vram = mem_info.free
+
+            # Print or return the information as desired
+            print(f"Total GPU vRAM: {total_vram} bytes")
+            print(f"Used GPU vRAM: {used_vram} bytes")
+            print(f"Free GPU vRAM: {free_vram} bytes")
+
+            # Return the information as a dictionary if needed
+            return {
+                "total_vram": total_vram,
+                "used_vram": used_vram,
+                "free_vram": free_vram
+            }
+        else:
+            print("No GPU found.")
+            return None
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+    finally:
+        # Clean up NVML
+        pynvml.nvmlShutdown()
+
+def convert_to_bytes(size):
+    """Convert a string representing a size to bytes."""
+    multipliers = {
+        'B': 1,
+        'KB': 1024,
+        'MB': 1024 ** 2,
+        'GB': 1024 ** 3,
+        'TB': 1024 ** 4,
+        'PB': 1024 ** 5
+    }
+    number, unit = size[:-2], size[-2:].strip().upper()
+
+    try:
+        bytes_value = int(float(number) * multipliers[unit])
+        return bytes_value
+    except (ValueError, KeyError):
+        raise ValueError("Invalid size format.")
 def load_model():
     global model
     if model is None:
         import whisper
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        try:
+        vRamInfo=get_gpu_vram()
+        if vRamInfo["free_vram"]>convert_to_bytes("10GB"):
             model = whisper.load_model(LARGE_WHISPER_MODEL_NAME).to(device)
-        except:
+        elif vRamInfo["free_vram"]>convert_to_bytes("5GB"):
             print("Failed to load large model, fallback to loading medium model...")
             model=whisper.load_model(MEDIUM_WHISPER_MODEL_NAME).to(device)
     return model
@@ -83,6 +144,8 @@ def speech2text(cards:list[SiteCard]):
                 article_index={"title":title,"url":url,"file_path":file_path}
                 articles_indexes[video_id]=article_index
                 save_articles_indexes(articles_indexes)
+            else:
+                article_index=articles_indexes[video_id]
             if os.path.exists(file_path):
                 print(f"Skipping {file_path} because it already exists")
                 continue

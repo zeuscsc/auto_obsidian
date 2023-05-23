@@ -5,3 +5,4 @@ opencv-python
 yt-dlp
 openai-whisper
 inflect
+psutil
