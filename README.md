@@ -1,5 +1,6 @@
 # Auto Obsidian
 I love watching youtube tutorials about new technology and algorithms. More and more content creator are creating tutorials about new technologies and algorithms. Now the newly created videos are uploaded much faster than the speed I could watch. It is hard to keep up with all of them. That's why I would like to try using Ai to help me to keep up with the latest technologies.
+
 Auto Obsidian is a tool that helps you to keep up with the latest technologies and tools. It is a tool that helps you to learn new technologies and tools by summarizing notes, creating links between notes and creating chapters' urls for youtube with marked timed urls tutorials from your exported toby collections (JSON).
 ## Features
 - [x] Summarize notes from videos
