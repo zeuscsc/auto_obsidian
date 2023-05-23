@@ -84,7 +84,6 @@ def is_valid_filename(filename):
         return not set(filename).intersection(r'<>:"/\|?*')
     except OSError:
         pass
-
     return False
 
 def generate():

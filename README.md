@@ -1,10 +1,9 @@
 ## Install
 Clone repo with submodules:
 ~~~shell
-git clone https://github.com/zeuscsc/auto_obsidian.git --recurse-submodules
-git submodule update --init --recursive
+git clone https://github.com/zeuscsc/auto_obsidian.git
 ~~~
-Torch 2.0 with conda
+Torch 2.0 with conda for wisperer
 ~~~shell
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 ~~~
