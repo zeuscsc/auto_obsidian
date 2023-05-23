@@ -9,6 +9,8 @@ Auto Obsidian is a tool that helps you to keep up with the latest technologies a
 - [ ] Self train LLM without GPT (Able to be totally Free of Charge finally)
 ## Quick Usage
 ~~~shell
+# Install torch 2.0 with conda for wisperer (Optional)
+conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install git+https://github.com/zeuscsc/auto_obsidian.git
 python auto_obsidian
 ~~~
