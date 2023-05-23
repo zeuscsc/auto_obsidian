@@ -7,6 +7,12 @@ Auto Obsidian is a tool that helps you to keep up with the latest technologies a
 - [x] Create chapters for youtube tutorials with marked timed urls
 - [ ] Group notes by classes
 - [ ] Self train LLM without GPT (Able to be totally Free of Charge finally)
+## Quick Usage
+~~~shell
+pip install git+https://github.com/zeuscsc/auto_obsidian.git
+python auto_obsidian
+~~~
+
 ## Install
 Clone repo with submodules:
 ~~~shell
@@ -45,9 +51,3 @@ $ENV:TECKY_API_KEY="12a34567-bc89-1011-12de-1234567x1234"
 ~~~shell
 python main.py
 ~~~
-## Usage with pip
-~~~shell
-pip install git+https://github.com/zeuscsc/auto_obsidian.git
-python auto_obsidian
-~~~
-
