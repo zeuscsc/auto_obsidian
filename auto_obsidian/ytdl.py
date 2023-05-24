@@ -17,10 +17,7 @@ def download(video_id:str):
     os.makedirs(output_folder, exist_ok=True)
     if get_file_in_directory(video_id) is None:
         command = f"yt-dlp -o '{output_folder}/%(id)s.%(ext)s' '{video_url}'"
-        if COLAB:
-            !{command} # type: ignore
-        else:
-            subprocess.call(command, shell=True)
+        subprocess.call(command, shell=True)
 
 def extract_video_id(url:str):
     pattern = r"(?:v=|v\/|vi=|vi\/|youtu.be\/|\/v\/|embed\/|\/u\/\w\/|e\/|watch\?v=|\&v=|\?v=)([\w-]+)"
