@@ -10,3 +10,4 @@ articles
 articles_indexes.json
 *.exe
 test.py
+note_with_snapshot_cache
