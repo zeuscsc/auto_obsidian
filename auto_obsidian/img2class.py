@@ -1,5 +1,4 @@
 from transformers import ViTImageProcessor, ViTForImageClassification
-from PIL import Image
 
 procressor=None
 model=None

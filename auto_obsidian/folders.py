@@ -1,4 +1,3 @@
-import os
 OBSIDIAN_FOLDER_NAME = "obsidian_notes"
 
 def reset_root_folder(path:str):

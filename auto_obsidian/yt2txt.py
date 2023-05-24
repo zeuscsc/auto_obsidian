@@ -7,6 +7,7 @@ import json
 
 from .folders import VIDEOS_FOLDER,ARTICLES_FOLDER,AUDIO_FOLDER
 from .ytdl import extract_video_id, download
+from .env import COLAB
 
 LARGE_WHISPER_MODEL_NAME="large"
 MEDIUM_WHISPER_MODEL_NAME="medium.en"
@@ -126,8 +127,11 @@ def extract_audios():
         if os.path.exists(get_audio_path(filename)):
             print(f"Skipping {file} because it already exists")
             continue
-        command=f"ffmpeg -i {VIDEOS_FOLDER}/{file} -vn -c:a aac -b:a 128k -y {get_audio_path(filename)}"
-        subprocess.call(command, shell=True)
+        command=f"ffmpeg -i '{VIDEOS_FOLDER}/{file}' -vn -c:a aac -b:a 128k -y '{get_audio_path(filename)}'"
+        if COLAB:
+            !{command} # type: ignore
+        else:
+            subprocess.call(command, shell=True)
     pass
 def speech2text(cards:list[SiteCard]):
     from .articles2notes import save_articles_indexes,load_articles_indexes
