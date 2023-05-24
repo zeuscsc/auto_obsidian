@@ -4,7 +4,6 @@ import re
 import glob
 
 from .folders import VIDEOS_FOLDER
-from .env import COLAB
 
 def get_file_in_directory(filename_without_extension:str):
     matching_files = glob.glob(f"{VIDEOS_FOLDER}/{filename_without_extension}.*")
