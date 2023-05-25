@@ -35,15 +35,21 @@ def auto_link_mentions(text:str, mentions:list[str],exclude_mentions:list[str]=[
     for mention in mentions:
         if mention.lower() in exclude_mentions:
             continue
-        mention_with_plurals_versions:list[str]=[]
-        mention_with_plurals_versions.append(plural_adder.plural_noun(mention,1))
-        mention_with_plurals_versions.append(plural_adder.plural_noun(mention,2))
-        for mention_version in mention_with_plurals_versions:
-            start_index=text.lower().find(mention_version.lower())
+        if is_mentioned(text,mention):
+            start_index=text.lower().find(mention.lower())
             if start_index==-1:
                 continue
-            end_index=start_index+len(mention_version)
+            end_index=start_index+len(mention)
             text=text[:start_index]+f'[[{mention}|{text[start_index:end_index]}]]'+text[end_index:]
+        # mention_with_plurals_versions:list[str]=[]
+        # mention_with_plurals_versions.append(plural_adder.plural_noun(mention,1))
+        # mention_with_plurals_versions.append(plural_adder.plural_noun(mention,2))
+        # for mention_version in mention_with_plurals_versions:
+        #     start_index=text.lower().find(mention_version.lower())
+        #     if start_index==-1:
+        #         continue
+        #     end_index=start_index+len(mention_version)
+        #     text=text[:start_index]+f'[[{mention}|{text[start_index:end_index]}]]'+text[end_index:]
     return text
 
 def link_all_notes():
