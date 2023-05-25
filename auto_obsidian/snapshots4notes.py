@@ -50,6 +50,8 @@ def add_snapshot4notes_with_speeches():
         video_id=extract_video_id(article_index["url"])
         load_video(video_id)
         article=load_article(article_index)
+        if article is None:
+            continue
         article_sentences=[]
         segments=article["segments"]
         for segment in segments:
@@ -57,7 +59,7 @@ def add_snapshot4notes_with_speeches():
         if "note_name" in article_index:
             note_name=article_index["note_name"]
             note=load_notes_with_snapshot_cache(video_id,note_name)
-            if note==None:
+            if note is None:
                 note=load_note(video_id,note_name)
                 note_subtitles=[]
                 print(f"Extracting snapshots for {note_name}")

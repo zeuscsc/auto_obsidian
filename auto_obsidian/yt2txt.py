@@ -80,6 +80,7 @@ def load_model():
         device = "cuda" if torch.cuda.is_available() else "cpu"
         vRamInfo=get_gpu_vram()
         if vRamInfo["free_vram"]>convert_to_bytes("10GB"):
+            print("Loading large model...")
             model = whisper.load_model(LARGE_WHISPER_MODEL_NAME).to(device)
         elif vRamInfo["free_vram"]>convert_to_bytes("5GB"):
             print("Failed to load large model, fallback to loading medium model...")
@@ -126,7 +127,7 @@ def extract_audios():
         if os.path.exists(get_audio_path(filename)):
             print(f"Skipping {file} because it already exists")
             continue
-        command=f"ffmpeg -i '{VIDEOS_FOLDER}/{file}' -vn -c:a aac -b:a 128k -y '{get_audio_path(filename)}'"
+        command=f"ffmpeg -i {VIDEOS_FOLDER}/{file} -vn -c:a aac -b:a 128k -y {get_audio_path(filename)}"
         subprocess.call(command, shell=True)
     pass
 def speech2text(cards:list[SiteCard]):

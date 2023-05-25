@@ -86,11 +86,15 @@ def on_tokens_oversized(e,model,system,assistant,user):
 def get_chat_response(model,system,assistant,user):
     chat_cache=load_chat_cache(model,system,assistant,user)
     if chat_cache is not None:
-        if "choices" in chat_cache:
+        if "choices" in chat_cache and len(chat_cache["choices"])>0 and "message" in chat_cache["choices"][0] and \
+            "content" in chat_cache["choices"][0]["message"]:
             return chat_cache["choices"][0]["message"]["content"]
         elif "on_tokens_oversized" in chat_cache:
             e=chat_cache["on_tokens_oversized"]
             return on_tokens_oversized(e,model,system,assistant,user)
+        elif "choices" in chat_cache and len(chat_cache["choices"])>0 and "message" in chat_cache["choices"][0] and \
+            "content" not in chat_cache["choices"][0]["message"]:
+            delete_chat_cache(model,system,assistant,user)
     if model=="gpt-3.5-turbo":
         switch2openai()
     elif model=="gpt-4":

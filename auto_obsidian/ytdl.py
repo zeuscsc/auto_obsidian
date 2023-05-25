@@ -14,11 +14,12 @@ def download(video_id:str):
     video_url = "https://www.youtube.com/watch?v=" + video_id
     output_folder = VIDEOS_FOLDER
     os.makedirs(output_folder, exist_ok=True)
-    if os.path.exists(get_file_in_directory(video_id)):
+    if get_file_in_directory(video_id) is not None and os.path.exists(get_file_in_directory(video_id)):
         print(f"Skipping {get_file_in_directory(video_id)} because it already exists")
         return
     if get_file_in_directory(video_id) is None:
-        command = f"yt-dlp -o '{output_folder}/%(id)s.%(ext)s' '{video_url}'"
+        command = f"yt-dlp -o {output_folder}/%(id)s.%(ext)s {video_url}"
+        print(f"Running command: {command}")
         subprocess.call(command, shell=True)
 
 def extract_video_id(url:str):

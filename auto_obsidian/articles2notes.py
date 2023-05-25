@@ -6,8 +6,7 @@ from .folders import NOTES_FOLDER,ARTICLES_INDEXES_JSON_FILE_PATH
 from .gpt import get_chat_response,GPT4_MODEL
 from .yt2txt import extract_video_id
 
-def get_notes_from_chat(article:dict):
-    system="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
+ARTICLES2NOTE_INSTRUCTION="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
 And summarize each paragraph with a title.
 Remember to keep the technology or algorithm name, very important.
 Please write the notes in markdown format.
@@ -19,22 +18,27 @@ The earliest computer operating systems ran only one program at a time.
 ### What it have to do with Relationsal Database ManagementSystem
 In a database, a deadlock is an unwanted situation in which two or more transactions are waiting indefinitely for one another to give up locks. 
 Deadlock is said to be one of the most feared complications in DBMS as it brings the whole system to a Halt. 
-When you tries to insert or update data on database, sometime your record need to depend on the row record.  
+When you tries to insert or update data on database, sometime your record need to depend on the row record. 
 """
+NOTE2TITLE_INSTRUCTION="""You are a scholars that is taking markdown notes about some video, you would be giving some written scripts for the task.
+You have finished writing the notes, and you want to extract the title from the notes.
+The title should only be the name of the technology or algorithm, no extra words needed.
+Please write the notes in markdown format. No need to add "Title:" for the Title. Make sure the title is within 10 words.
+Always use singular nouns for the title.
+Here is an example:
+## Hidden Markov Model
+"""
+
+def article2note(article:dict):
+    system=ARTICLES2NOTE_INSTRUCTION
     assistant="#### "
     user=str(article["text"])
     if len(user.split())<50:
         return None
     response=get_chat_response(GPT4_MODEL,system,assistant,user)
     return response
-def get_title_from_notes(article:str):
-    system="""You are a scholars that is taking markdown notes about some video, you would be giving some written scripts for the task.
-You have finished writing the notes, and you want to extract the title from the notes.
-The title should only be the name of the technology or algorithm, no extra words needed.
-Please write the notes in markdown format. No need to write "Title:" for the Title. Make sure the title is within 10 words.
-Here is an example:
-## Hidden Markov Model
-"""
+def note2title(article:str):
+    system=NOTE2TITLE_INSTRUCTION
     assistant="## "
     user=article
     if len(user.split())<10:
@@ -76,9 +80,11 @@ def save_articles_indexes(articles_indexes_json_data):
         json.dump(articles_indexes_json_data, articles_indexes_json_file, indent=4,ensure_ascii=False)
 def load_article(article_index):
     file_path=article_index["file_path"]
-    with open(file_path, "r",encoding="utf8") as article_json_file:
-        article_json_data = json.load(article_json_file)
-        return dict(article_index,**article_json_data)
+    if os.path.exists(file_path):
+        with open(file_path, "r",encoding="utf8") as article_json_file:
+            article_json_data = json.load(article_json_file)
+            return dict(article_index,**article_json_data)
+    return None
 def is_valid_filename(filename):
     try:
         return not set(filename).intersection(r'<>:"/\|?*')
@@ -95,11 +101,13 @@ def generate():
         article_title=str(article_index["title"])
         print(f"Generating: {article_title}...")
         article = load_article(article_index)
+        if article is None:
+            continue
         url=article["url"]
-        md_note_content=get_notes_from_chat(article)
+        md_note_content=article2note(article)
         if md_note_content is None:
             continue
-        title=str(get_title_from_notes(md_note_content))
+        title=str(note2title(md_note_content))
         if title is None:
             continue
         obsidian_title=article_title.replace("[","").replace("]","")
