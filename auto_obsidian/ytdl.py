@@ -14,7 +14,7 @@ def download(video_id:str):
     video_url = "https://www.youtube.com/watch?v=" + video_id
     output_folder = VIDEOS_FOLDER
     os.makedirs(output_folder, exist_ok=True)
-    if get_file_in_directory(video_id) is not None and os.path.exists(get_file_in_directory(video_id)):
+    if get_file_in_directory(video_id) is not None:
         print(f"Skipping {get_file_in_directory(video_id)} because it already exists")
         return
     if get_file_in_directory(video_id) is None:
