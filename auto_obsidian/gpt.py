@@ -96,6 +96,8 @@ def get_chat_response(model,system,assistant,user):
         elif "on_tokens_oversized" in chat_cache:
             e=chat_cache["on_tokens_oversized"]
             return on_tokens_oversized(e,model,system,assistant,user)
+        elif "result_filtered" in chat_cache:
+            return None
         elif "choices" in chat_cache and len(chat_cache["choices"])>0 and "message" in chat_cache["choices"][0] and \
             "content" not in chat_cache["choices"][0]["message"]:
             delete_chat_cache(model,system,assistant,user)
@@ -121,6 +123,7 @@ def get_chat_response(model,system,assistant,user):
             save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
             return on_tokens_oversized(e,model,system,assistant,user)
         elif detect_if_result_filtered(e):
+            save_chat_cache(model,system,assistant,user,{"result_filtered":str(e)})
             return None
         else:
             global gpt_error_delay
