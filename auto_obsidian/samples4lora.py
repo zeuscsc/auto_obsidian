@@ -1,4 +1,4 @@
-from .gpt import get_chat_response,GPT4_MODEL
+from .gpt import GPT4_MODEL
 from .articles2notes import load_articles_indexes,load_article,ARTICLES2NOTE_INSTRUCTION,NOTE2TITLE_INSTRUCTION,article2note,note2title
 from .folders import DATASETS_FOLDER
 

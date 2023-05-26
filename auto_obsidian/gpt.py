@@ -74,6 +74,8 @@ def detect_if_tokens_oversized(e):
         re.search(r"Please reduce the length of the messages.", str(e)) is not None or \
         (re.search(r"HTTP code 413 from API", str(e)) is not None and \
             re.search(r"PayloadTooLargeError: request entity too large", str(e)) is not None)
+def detect_if_result_filtered(e):
+    return re.search(r"The response was filtered due to the prompt triggering Azure OpenAI’s content management policy.", str(e)) is not None
 def on_tokens_oversized(e,model,system,assistant,user):
     if detect_if_tokens_oversized(e):
         print("Splitting text in half...")
@@ -81,7 +83,9 @@ def on_tokens_oversized(e,model,system,assistant,user):
         chunks.extend(split_text_in_half(user))
         responses=""
         for chunk in chunks:
-            responses+=get_chat_response(model,system,assistant,chunk)
+            response=get_chat_response(model,system,assistant,chunk)
+            if response is not None:
+                responses+=response
             return responses
 def get_chat_response(model,system,assistant,user):
     chat_cache=load_chat_cache(model,system,assistant,user)
@@ -116,6 +120,8 @@ def get_chat_response(model,system,assistant,user):
         if detect_if_tokens_oversized(e):
             save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
             return on_tokens_oversized(e,model,system,assistant,user)
+        elif detect_if_result_filtered(e):
+            return None
         else:
             global gpt_error_delay
             sleep(gpt_error_delay)
