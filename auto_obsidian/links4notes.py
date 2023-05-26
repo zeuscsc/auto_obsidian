@@ -55,6 +55,7 @@ def auto_link_mentions(text:str, mentions:list[str],exclude_mentions:list[str]=[
 def link_all_notes():
     articles_indexes=load_articles_indexes()
     notes_map=dict()
+    original_notes_names_map=dict()
     articles_notes_map=dict()
     for key in articles_indexes:
         article_index=articles_indexes[key]
@@ -63,9 +64,11 @@ def link_all_notes():
             note_name=str(article_index["note_name"])
             note=load_note(video_id,note_name)
             notes_map[note_name.lower()]=note
+            original_notes_names_map[note_name.lower()]=note_name
             articles_notes_map[note_name.lower()]=article_index
     for key in notes_map:
-        print(f"Linking {key}")
+        note_name=original_notes_names_map[key]
+        print(f"Linking {note_name}")
         note=str(notes_map[key])
         article_index=articles_notes_map[key]
         video_id=extract_video_id(article_index["url"])
@@ -76,6 +79,6 @@ def link_all_notes():
                 linked_note+=sentence+"\n"
                 continue
             linked_note+=auto_link_mentions(sentence,notes_map.keys(),[str(key).lower()])+"\n"
-        save_note(video_id,key,linked_note)
+        save_note(video_id,note_name,linked_note)
     return
 
