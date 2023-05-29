@@ -6,3 +6,4 @@ yt-dlp
 openai-whisper
 inflect
 psutil
+peft

@@ -13,17 +13,21 @@ AUTHOR = 'Zeus Chiu'
 REQUIRES_PYTHON = '>=3.9.0'
 VERSION = '0.1.0'
 
-REQUIRED = [
-"openai",
-"sentence-transformers",
-"spacy",
-"opencv-python",
-"yt-dlp",
-"openai-whisper",
-"inflect",
-"psutil",
-"pynvml",
-]
+# REQUIRED = [
+# "openai",
+# "sentence-transformers",
+# "spacy",
+# "opencv-python",
+# "yt-dlp",
+# "openai-whisper",
+# "inflect",
+# "psutil",
+# "pynvml",
+# "peft",
+# ]
+with open('requirements.txt') as f:
+    required_packages = f.readlines()
+    required_packages = [pkg.strip() for pkg in required_packages]
 
 EXTRAS = {
 }
@@ -98,7 +102,8 @@ setup(
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
-    install_requires=REQUIRED,
+    # install_requires=REQUIRED,
+    install_requires=required_packages,
     extras_require=EXTRAS,
     include_package_data=True,
     license='MIT',
