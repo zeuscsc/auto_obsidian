@@ -3,7 +3,7 @@ import re
 import os
 
 from .folders import NOTES_FOLDER,ARTICLES_INDEXES_JSON_FILE_PATH
-from .gpt import get_chat_response,GPT4_MODEL
+from .llm import LLM,get_best_available_llm
 from .yt2txt import extract_video_id
 
 ARTICLES2NOTE_INSTRUCTION="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
@@ -30,20 +30,22 @@ Here is an example:
 """
 
 def article2note(article:dict):
+    llm4notes=get_best_available_llm()
     system=ARTICLES2NOTE_INSTRUCTION
     assistant="#### "
     user=str(article["text"])
     if len(user.split())<50:
         return None
-    response=get_chat_response(GPT4_MODEL,system,assistant,user)
+    response=llm4notes.get_response(system,assistant,user)
     return response
 def note2title(article:str):
+    llm4notes=get_best_available_llm()
     system=NOTE2TITLE_INSTRUCTION
     assistant="## "
     user=article
     if len(user.split())<10:
         return None
-    response=get_chat_response(GPT4_MODEL,system,assistant,user)
+    response=llm4notes.get_response(system,assistant,user)
     return str(response).replace(":"," - ")
 def get_files_in_directory(directory):
     return [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]

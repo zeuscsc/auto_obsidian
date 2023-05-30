@@ -8,9 +8,10 @@ def reset_root_folder(path:str):
         NOTES_FOLDER,\
         ARTICLES_INDEXES_JSON_FILE_PATH,\
         SNAPSHOTS_FOLDER,\
-        CHAT_CACHE_FOLDER,\
+        LLM_RESPONSE_CACHE_FOLDER,\
         NOTES_WITH_SNAPSHOT_CACHE_FOLDER,\
-        DATASETS_FOLDER
+        DATASETS_FOLDER,\
+        LLM_FOLDER
     ROOT_FOLDER=path
     VIDEOS_FOLDER = f"{ROOT_FOLDER}videos"
     AUDIO_FOLDER = f"{ROOT_FOLDER}audios"
@@ -18,8 +19,9 @@ def reset_root_folder(path:str):
     NOTES_FOLDER = f"{ROOT_FOLDER}{OBSIDIAN_FOLDER_NAME}/markdown_notes"
     ARTICLES_INDEXES_JSON_FILE_PATH=f"{ROOT_FOLDER}articles_indexes.json"
     SNAPSHOTS_FOLDER = f"{ROOT_FOLDER}{OBSIDIAN_FOLDER_NAME}/snapshots"
-    CHAT_CACHE_FOLDER = f"{ROOT_FOLDER}chat_cache"
+    LLM_RESPONSE_CACHE_FOLDER = f"{ROOT_FOLDER}chat_cache"
     NOTES_WITH_SNAPSHOT_CACHE_FOLDER = f"{ROOT_FOLDER}note_with_snapshot_cache"
     DATASETS_FOLDER = f"{ROOT_FOLDER}datasets"
+    LLM_FOLDER = f"{ROOT_FOLDER}llm"
 
 reset_root_folder("./")
