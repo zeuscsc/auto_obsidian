@@ -62,7 +62,7 @@ class GPT(LLM_Base):
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
                 LLM_Base.save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
-                return self.instant.on_tokens_oversized(e,model,system,assistant,user)
+                return self.instant.on_tokens_oversized(e,system,assistant,user)
             elif LLM_Base.detect_if_result_filtered(e):
                 LLM_Base.save_chat_cache(model,system,assistant,user,{"result_filtered":str(e)})
                 return None

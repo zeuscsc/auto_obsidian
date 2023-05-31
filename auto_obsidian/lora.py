@@ -288,7 +288,7 @@ class LoRA(LLM_Base):
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
                 LLM_Base.save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
-                return self.instant.on_tokens_oversized(e,model,system,assistant,user)
+                return self.instant.on_tokens_oversized(e,system,assistant,user)
             return None
         response=decoded_output.split(TEMPLATE["response_split"])[1].strip()
         return response
