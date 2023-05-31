@@ -17,7 +17,7 @@ def get_notes_with_snapshot_cache_path(video_id,note_name):
     from .llm import get_best_available_llm
     model_name=get_best_available_llm().get_model_name()
     note_path=get_note_path(video_id,note_name)
-    note_path=note_path.replace(NOTES_FOLDER,f"{NOTES_WITH_SNAPSHOT_CACHE_FOLDER}\{model_name}")
+    note_path=note_path.replace(NOTES_FOLDER,f"{NOTES_WITH_SNAPSHOT_CACHE_FOLDER}/{model_name}")
     return note_path
 def load_note(video_id,note_name):
     note_path=get_note_path(video_id,note_name)
