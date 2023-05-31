@@ -248,7 +248,7 @@ def detect_if_cuda_out_of_memory(e):
 
 BASE_MODEL="decapoda-research/llama-7b-hf"
 # LORA_MODEL="obsidian-notes-sau-3072-2023-05-24-10-54-41"
-LORA_MODEL="obsidian-notes-cp20-2023-05-31-10-09-19"
+LORA_MODEL="obsidian-notes-640steps-2023-05-31-10-09-19"
 TEMPLATE={
   "description": "Template used by Alpaca-LoRA.",
   "prompt_input": "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.\n\n### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n",
