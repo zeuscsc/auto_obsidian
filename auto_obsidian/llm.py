@@ -96,6 +96,8 @@ class LLM:
     def __init__(self,ModelClass:Type[LLM_Base]) -> None:
         self.model_class=ModelClass(self)
         pass
+    def get_model_name(self):
+        return self.model_class.get_model_name()
     def get_response(self,system,assistant,user):
         return self.model_class.get_response(system,assistant,user)
     def on_tokens_oversized(self,e,system,assistant,user):
