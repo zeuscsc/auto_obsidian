@@ -1,7 +1,8 @@
 OBSIDIAN_FOLDER_NAME = "obsidian_notes"
 
 def reset_root_folder(path:str):
-    global VIDEOS_FOLDER,\
+    global ROOT_FOLDER,\
+        VIDEOS_FOLDER,\
         AUDIO_FOLDER,\
         ARTICLES_FOLDER,\
         OBSIDIAN_FOLDER_NAME,\
