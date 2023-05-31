@@ -29,19 +29,19 @@ class GPT(LLM_Base):
         model=GPT.model_picker()
         if model is None:
             raise Exception("No API key found for OpenAI or Tecky")
-        chat_cache=LLM_Base.load_chat_cache(model,system,assistant,user)
-        if chat_cache is not None:
-            if "choices" in chat_cache and len(chat_cache["choices"])>0 and "message" in chat_cache["choices"][0] and \
-                "content" in chat_cache["choices"][0]["message"]:
-                return chat_cache["choices"][0]["message"]["content"]
-            elif "on_tokens_oversized" in chat_cache:
-                e=chat_cache["on_tokens_oversized"]
+        response_cache=LLM_Base.load_response_cache(model,system,assistant,user)
+        if response_cache is not None:
+            if "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
+                "content" in response_cache["choices"][0]["message"]:
+                return response_cache["choices"][0]["message"]["content"]
+            elif "on_tokens_oversized" in response_cache:
+                e=response_cache["on_tokens_oversized"]
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
-            elif "result_filtered" in chat_cache:
+            elif "result_filtered" in response_cache:
                 return None
-            elif "choices" in chat_cache and len(chat_cache["choices"])>0 and "message" in chat_cache["choices"][0] and \
-                "content" not in chat_cache["choices"][0]["message"]:
-                LLM_Base.delete_chat_cache(model,system,assistant,user)
+            elif "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
+                "content" not in response_cache["choices"][0]["message"]:
+                LLM_Base.delete_response_cache(model,system,assistant,user)
         if model=="gpt-3.5-turbo":
             GPT.switch2openai()
         elif model=="gpt-4":
@@ -56,15 +56,15 @@ class GPT(LLM_Base):
                         {"role": "user","content": user}
                     ],
                 )
-            LLM_Base.save_chat_cache(model,system,assistant,user,completion)
+            LLM_Base.save_response_cache(model,system,assistant,user,completion)
             return completion.choices[0].message.content
         except Exception as e:
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
-                LLM_Base.save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
+                LLM_Base.save_response_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
             elif LLM_Base.detect_if_result_filtered(e):
-                LLM_Base.save_chat_cache(model,system,assistant,user,{"result_filtered":str(e)})
+                LLM_Base.save_response_cache(model,system,assistant,user,{"result_filtered":str(e)})
                 return None
             else:
                 sleep(self.gpt_error_delay)

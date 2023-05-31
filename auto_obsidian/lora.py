@@ -260,6 +260,19 @@ class LoRA(LLM_Base):
         base_model=BASE_MODEL
         lora_model=LORA_MODEL
         data_dir_realpath = LLM_FOLDER
+        
+        response_cache=LLM_Base.load_response_cache(model,system,assistant,user)
+        if response_cache is not None:
+            if "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
+                "content" in response_cache["choices"][0]["message"]:
+                return response_cache["choices"][0]["message"]["content"]
+            elif "on_tokens_oversized" in response_cache:
+                e=response_cache["on_tokens_oversized"]
+                return self.instant.on_tokens_oversized(e,system,assistant,user)
+            elif "result_filtered" in response_cache:
+                return None
+            elif "response" not in response_cache:
+                LLM_Base.delete_response_cache(model,system,assistant,user)
 
         instruction=f"{SYSTEM_TAG}{system}{ASSISTANT_TAG}{assistant}"
         input=f"{USER_TAG}{user}"
@@ -288,11 +301,11 @@ class LoRA(LLM_Base):
         except Exception as e:
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
-                LLM_Base.save_chat_cache(model_name,system,assistant,user,{"on_tokens_oversized":str(e)})
+                LLM_Base.save_response_cache(model_name,system,assistant,user,{"on_tokens_oversized":str(e)})
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
             return None
         response=decoded_output.split(TEMPLATE["response_split"])[1].strip()
         completion={"response":response,"output":output.tolist(),"completed":completed}
-        LLM_Base.save_chat_cache(model,system,assistant,user,completion)
+        LLM_Base.save_response_cache(model,system,assistant,user,completion)
         return response
     pass

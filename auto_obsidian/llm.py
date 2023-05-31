@@ -13,7 +13,7 @@ def calculate_md5(string:str):
     return md5_hash
 
 class _LLM_Base(ABC):
-    def load_chat_cache(model,system,assistant,user):
+    def load_response_cache(model,system,assistant,user):
         try:
             hashed_request=calculate_md5(f"{model}{system}{assistant}{user}")
             matching_files = glob.glob(f"{LLM_RESPONSE_CACHE_FOLDER}/{hashed_request}/*.json")
@@ -24,14 +24,14 @@ class _LLM_Base(ABC):
         except Exception as e:
             print(e)
         return None
-    def save_chat_cache(model,system,assistant,user,chat_cache):
+    def save_response_cache(model,system,assistant,user,chat_cache):
         hashed_request=calculate_md5(f"{model}{system}{assistant}{user}")
         now = datetime.datetime.now()
         time_string = now.strftime("%Y%m%d%H%M%S")
         os.makedirs(f"{LLM_RESPONSE_CACHE_FOLDER}/{hashed_request}", exist_ok=True)
         with open(f"{LLM_RESPONSE_CACHE_FOLDER}/{hashed_request}/{time_string}.json", "w",encoding="utf8") as temp_file:
             json.dump(chat_cache, temp_file, indent=4, ensure_ascii=False)
-    def delete_chat_cache(model,system,assistant,user):
+    def delete_response_cache(model,system,assistant,user):
         hashed_request=calculate_md5(f"{model}{system}{assistant}{user}")
         matching_files = glob.glob(f"{LLM_RESPONSE_CACHE_FOLDER}/{hashed_request}/*.json")
         for file in matching_files:
