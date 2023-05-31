@@ -264,9 +264,8 @@ class LoRA(LLM_Base):
         model_name=f"{base_model}-{lora_model}".replace("/","-")
         response_cache=LLM_Base.load_response_cache(model_name,system,assistant,user)
         if response_cache is not None:
-            if "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
-                "content" in response_cache["choices"][0]["message"]:
-                return response_cache["choices"][0]["message"]["content"]
+            if "response" in response_cache:
+                return response_cache["response"]
             elif "on_tokens_oversized" in response_cache:
                 e=response_cache["on_tokens_oversized"]
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
