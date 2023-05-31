@@ -21,6 +21,8 @@ def get_notes_with_snapshot_cache_path(video_id,note_name):
     return note_path
 def load_note(video_id,note_name):
     note_path=get_note_path(video_id,note_name)
+    if os.path.exists(note_path)==False:
+        return None
     with open(note_path, "r",encoding="utf8") as note_file:
         note=note_file.read()
         return note
@@ -64,6 +66,8 @@ def add_snapshot4notes_with_speeches():
             note=load_notes_with_snapshot_cache(video_id,note_name)
             if note is None:
                 note=load_note(video_id,note_name)
+                if note is None:
+                    continue
                 note_subtitles=[]
                 print(f"Extracting snapshots for {note_name}")
                 note_sentences=note.split("\n")

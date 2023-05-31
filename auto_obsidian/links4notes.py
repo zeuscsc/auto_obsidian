@@ -63,6 +63,8 @@ def link_all_notes():
         if "note_name" in article_index:
             note_name=str(article_index["note_name"])
             note=load_note(video_id,note_name)
+            if note is None:
+                continue
             notes_map[note_name.lower()]=note
             original_notes_names_map[note_name.lower()]=note_name
             articles_notes_map[note_name.lower()]=article_index
