@@ -110,7 +110,7 @@ def generate():
         if md_note_content is None:
             continue
         title=str(note2title(md_note_content))
-        if title is None:
+        if title is None or title == str(None):
             continue
         obsidian_title=article_title.replace("[","").replace("]","")
         md_note=f"{title}\n{md_note_content}"
