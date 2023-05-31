@@ -1,4 +1,4 @@
-from .llm import LLM_Base
+from .llm import LLM_Base,ON_TOKENS_OVERSIZED
 import openai
 from time import sleep
 import os
@@ -7,6 +7,9 @@ GPT3_MODEL = "gpt-3.5-turbo"
 GPT4_MODEL = "gpt-4"
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 TECKY_API_KEY = os.environ.get('TECKY_API_KEY')
+
+ON_RESULT_FILTERED="on_result_filtered"
+
 class GPT(LLM_Base):
     gpt_error_delay=2
 
@@ -36,10 +39,10 @@ class GPT(LLM_Base):
             if "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
                 "content" in response_cache["choices"][0]["message"]:
                 return response_cache["choices"][0]["message"]["content"]
-            elif "on_tokens_oversized" in response_cache:
-                e=response_cache["on_tokens_oversized"]
+            elif ON_TOKENS_OVERSIZED in response_cache:
+                e=response_cache[ON_TOKENS_OVERSIZED]
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
-            elif "result_filtered" in response_cache:
+            elif ON_RESULT_FILTERED in response_cache:
                 return None
             elif "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
                 "content" not in response_cache["choices"][0]["message"]:
@@ -63,10 +66,10 @@ class GPT(LLM_Base):
         except Exception as e:
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
-                LLM_Base.save_response_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
+                LLM_Base.save_response_cache(model,system,assistant,user,{ON_TOKENS_OVERSIZED:str(e)})
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
             elif LLM_Base.detect_if_result_filtered(e):
-                LLM_Base.save_response_cache(model,system,assistant,user,{"result_filtered":str(e)})
+                LLM_Base.save_response_cache(model,system,assistant,user,{ON_RESULT_FILTERED:str(e)})
                 return None
             else:
                 sleep(self.gpt_error_delay)

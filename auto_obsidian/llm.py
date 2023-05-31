@@ -8,6 +8,8 @@ from abc import ABC, abstractmethod
 from typing import Type
 from .folders import LLM_RESPONSE_CACHE_FOLDER
 
+ON_TOKENS_OVERSIZED="on_tokens_oversized"
+
 def calculate_md5(string:str):
     md5_hash = hashlib.md5(string.encode()).hexdigest()
     return md5_hash
@@ -42,8 +44,7 @@ class _LLM_Base(ABC):
             re.search(r"tokens", str(e)) is not None and \
             re.search(r"Please reduce the length of the messages.", str(e)) is not None) or \
             (re.search(r"HTTP code 413 from API", str(e)) is not None and \
-                re.search(r"PayloadTooLargeError: request entity too large", str(e)) is not None) or \
-            re.search(r"CUDA out of memory", str(e)) is not None
+                re.search(r"PayloadTooLargeError: request entity too large", str(e)) is not None)
     def detect_if_result_filtered(e):
         return re.search(r"The response was filtered due to the prompt triggering Azure OpenAI’s content management policy.", str(e)) is not None
     def split_text_in_half_if_too_large(text:str,max_tokens=10000):

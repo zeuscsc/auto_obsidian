@@ -1,6 +1,6 @@
 # @title Prepare function for Load and text generation { display-mode: "form" }
 from .folders import LLM_FOLDER
-from .llm import LLM_Base
+from .llm import LLM_Base,ON_TOKENS_OVERSIZED
 
 import torch
 import transformers
@@ -20,7 +20,7 @@ loaded_models = dict()
 loaded_tokenizers = dict()
 
 MAX_TOKEN_SIZE=3072
-# CACHE_DIR=google_drive_data_directory_path
+ON_CUDA_OUT_OF_MEMORY="on_cuda_out_of_memory"
 
 def get_torch():
     return torch
@@ -243,6 +243,9 @@ def generate(
     decoded_output = tokenizer.decode(output, skip_special_tokens=skip_special_tokens)
     return decoded_output, output, True
 
+def detect_if_cuda_out_of_memory(e):
+    return re.search(r"CUDA out of memory", str(e)) is not None
+
 BASE_MODEL="decapoda-research/llama-7b-hf"
 LORA_MODEL="obsidian-notes-sau-3072-2023-05-24-10-54-41"
 TEMPLATE={
@@ -272,10 +275,19 @@ class LoRA(LLM_Base):
                 return response_cache["response"]
             elif "on_tokens_oversized" in response_cache:
                 e=response_cache["on_tokens_oversized"]
-                return self.instant.on_tokens_oversized(e,system,assistant,user)
+                if detect_if_cuda_out_of_memory(e):
+                    LLM_Base.delete_response_cache(model_name,system,assistant,user)
+                else:
+                    return self.instant.on_tokens_oversized(e,system,assistant,user)
             elif "result_filtered" in response_cache:
                 return None
+            elif ON_CUDA_OUT_OF_MEMORY in response_cache:
+                e=response_cache[ON_CUDA_OUT_OF_MEMORY]
+                return self.instant.on_tokens_oversized(e,system,assistant,user)
             elif "response" not in response_cache:
+                LLM_Base.delete_response_cache(model_name,system,assistant,user)
+            else:
+                print(f"Unknown response cache state: {json.dumps(response_cache)}")
                 LLM_Base.delete_response_cache(model_name,system,assistant,user)
 
         instruction=f"{SYSTEM_TAG}{system}{ASSISTANT_TAG}{assistant}"
@@ -303,8 +315,12 @@ class LoRA(LLM_Base):
             decoded_output, output, completed = generate(model,tokenizer,prompt,generation_config,max_new_tokens)
         except Exception as e:
             print(e)
+            if detect_if_cuda_out_of_memory(e):
+                clear_cache()
+                LLM_Base.save_response_cache(model_name,system,assistant,user,{ON_CUDA_OUT_OF_MEMORY:str(e)})
+                return self.instant.on_tokens_oversized(e,system,assistant,user)
             if LLM_Base.detect_if_tokens_oversized(e):
-                LLM_Base.save_response_cache(model_name,system,assistant,user,{"on_tokens_oversized":str(e)})
+                LLM_Base.save_response_cache(model_name,system,assistant,user,{ON_TOKENS_OVERSIZED:str(e)})
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
             return None
         response=decoded_output.split(TEMPLATE["response_split"])[1].strip()
