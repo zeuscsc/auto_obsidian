@@ -256,12 +256,16 @@ ASSISTANT_TAG="<|ASSISTANT|>"
 USER_TAG="<|USER|>"
 
 class LoRA(LLM_Base):
+    def get_model_name(self):
+        base_model=BASE_MODEL
+        lora_model=LORA_MODEL
+        return f"{base_model}-{lora_model}".replace("/","-")
     def get_response(self,system,assistant,user):
         base_model=BASE_MODEL
         lora_model=LORA_MODEL
         data_dir_realpath = LLM_FOLDER
         
-        model_name=f"{base_model}-{lora_model}".replace("/","-")
+        model_name=self.get_model_name()
         response_cache=LLM_Base.load_response_cache(model_name,system,assistant,user)
         if response_cache is not None:
             if "response" in response_cache:

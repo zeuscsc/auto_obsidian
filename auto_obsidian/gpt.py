@@ -25,8 +25,10 @@ class GPT(LLM_Base):
         else:
             return None
 
+    def get_model_name(self):
+        return GPT.model_picker()
     def get_response(self,system,assistant,user):
-        model=GPT.model_picker()
+        model=self.get_model_name()
         if model is None:
             raise Exception("No API key found for OpenAI or Tecky")
         response_cache=LLM_Base.load_response_cache(model,system,assistant,user)

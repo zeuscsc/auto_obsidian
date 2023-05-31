@@ -65,6 +65,9 @@ class _LLM_Base(ABC):
         return results
 
     @abstractmethod
+    def get_model_name(self):
+        pass
+    @abstractmethod
     def get_response(self,system,assistant,user):
         pass
 
