@@ -78,7 +78,7 @@ def link_all_notes():
             if sentence.startswith("Source:") or sentence.startswith("#"):
                 linked_note+=sentence+"\n"
                 continue
-            linked_note+=auto_link_mentions(sentence,notes_map.keys(),[str(key).lower()])+"\n"
+            linked_note+=auto_link_mentions(sentence,notes_map.keys(),[str(key).lower(),""])+"\n"
         save_note(video_id,note_name,linked_note)
     return
 
