@@ -18,9 +18,9 @@ class GPT(LLM_Base):
         openai.api_base = "https://api.openai.com/v1"
 
     def model_picker():
-        if TECKY_API_KEY is not None:
+        if TECKY_API_KEY is not None and TECKY_API_KEY != "":
             return GPT4_MODEL
-        elif OPENAI_API_KEY is not None:
+        elif OPENAI_API_KEY is not None and OPENAI_API_KEY != "":
             return GPT3_MODEL
         else:
             return None
