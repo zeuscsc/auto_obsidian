@@ -19,7 +19,6 @@ import sys
 loaded_models = dict()
 loaded_tokenizers = dict()
 
-CACHE_DIR=""
 MAX_TOKEN_SIZE=3072
 # CACHE_DIR=google_drive_data_directory_path
 
@@ -48,7 +47,7 @@ def _get_model_from_pretrained(
             from_tf=from_tf,
             force_download=force_download,
             trust_remote_code=True,
-            cache_dir=CACHE_DIR
+            cache_dir=LLM_FOLDER
         )
     else:
         return model_class.from_pretrained(
@@ -58,7 +57,7 @@ def _get_model_from_pretrained(
             from_tf=from_tf,
             force_download=force_download,
             trust_remote_code=True,
-            cache_dir=CACHE_DIR
+            cache_dir=LLM_FOLDER
         )
 def get_tokenizer(base_model_name):
     if base_model_name in loaded_tokenizers:
@@ -256,7 +255,7 @@ SYSTEM_TAG="<|SYSTEM|>"
 ASSISTANT_TAG="<|ASSISTANT|>"
 USER_TAG="<|USER|>"
 
-class Lora(LLM_Base):
+class LoRA(LLM_Base):
     def get_response(self,system,assistant,user):
         base_model=BASE_MODEL
         lora_model=LORA_MODEL

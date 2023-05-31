@@ -102,8 +102,10 @@ def get_best_available_llm():
     from .gpt import GPT
     model=GPT.model_picker()
     if model is not None:
+        print(f"Using {model} model")
         instant=LLM(GPT)
     else:
-        from .lora import Lora
-        instant=LLM(Lora)
+        print(f"Failed to connect to OpenAi, using LoRA model instead.")
+        from .lora import LoRA
+        instant=LLM(LoRA)
     return instant
