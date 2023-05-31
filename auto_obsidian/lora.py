@@ -261,7 +261,8 @@ class LoRA(LLM_Base):
         lora_model=LORA_MODEL
         data_dir_realpath = LLM_FOLDER
         
-        response_cache=LLM_Base.load_response_cache(model,system,assistant,user)
+        model_name=f"{base_model}-{lora_model}".replace("/","-")
+        response_cache=LLM_Base.load_response_cache(model_name,system,assistant,user)
         if response_cache is not None:
             if "choices" in response_cache and len(response_cache["choices"])>0 and "message" in response_cache["choices"][0] and \
                 "content" in response_cache["choices"][0]["message"]:
@@ -272,7 +273,7 @@ class LoRA(LLM_Base):
             elif "result_filtered" in response_cache:
                 return None
             elif "response" not in response_cache:
-                LLM_Base.delete_response_cache(model,system,assistant,user)
+                LLM_Base.delete_response_cache(model_name,system,assistant,user)
 
         instruction=f"{SYSTEM_TAG}{system}{ASSISTANT_TAG}{assistant}"
         input=f"{USER_TAG}{user}"
@@ -280,7 +281,6 @@ class LoRA(LLM_Base):
 
         tokenizer = get_tokenizer(base_model)
         lora_model_path=f"{data_dir_realpath}"
-        model_name=f"{base_model}-{lora_model}".replace("/","-")
         model=load_model(base_model,lora_model,lora_model_path,False)
         temperature=0.1
         top_p=0.75
@@ -306,6 +306,6 @@ class LoRA(LLM_Base):
             return None
         response=decoded_output.split(TEMPLATE["response_split"])[1].strip()
         completion={"response":response,"output":output.tolist(),"completed":completed}
-        LLM_Base.save_response_cache(model,system,assistant,user,completion)
+        LLM_Base.save_response_cache(model_name,system,assistant,user,completion)
         return response
     pass
