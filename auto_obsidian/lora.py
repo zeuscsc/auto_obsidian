@@ -267,6 +267,7 @@ class LoRA(LLM_Base):
 
         tokenizer = get_tokenizer(base_model)
         lora_model_path=f"{data_dir_realpath}"
+        model_name=f"{base_model}-{lora_model}".replace("/","-")
         model=load_model(base_model,lora_model,lora_model_path,False)
         temperature=0.1
         top_p=0.75
@@ -287,9 +288,11 @@ class LoRA(LLM_Base):
         except Exception as e:
             print(e)
             if LLM_Base.detect_if_tokens_oversized(e):
-                LLM_Base.save_chat_cache(model,system,assistant,user,{"on_tokens_oversized":str(e)})
+                LLM_Base.save_chat_cache(model_name,system,assistant,user,{"on_tokens_oversized":str(e)})
                 return self.instant.on_tokens_oversized(e,system,assistant,user)
             return None
         response=decoded_output.split(TEMPLATE["response_split"])[1].strip()
+        completion={"response":response,"output":output.tolist(),"completed":completed}
+        LLM_Base.save_chat_cache(model,system,assistant,user,completion)
         return response
     pass
