@@ -16,6 +16,7 @@ class _LLM_Base(ABC):
     def load_response_cache(model,system,assistant,user):
         try:
             hashed_request=calculate_md5(f"{model}{system}{assistant}{user}")
+            print(f"Loading response cache for {model} model with id: {hashed_request}...")
             matching_files = glob.glob(f"{LLM_RESPONSE_CACHE_FOLDER}/{hashed_request}/*.json")
             if len(matching_files)>0:
                 with open(matching_files[-1], "r",encoding="utf8") as chat_cache_file:
