@@ -24,6 +24,7 @@ def load_note(video_id,note_name):
         return note
 def save_note(video_id,note_name,note):
     note_path=get_note_path(video_id,note_name)
+    os.makedirs(os.path.dirname(note_path), exist_ok=True)
     with open(note_path, "w",encoding="utf8") as note_file:
         note_file.write(note)
 def load_notes_with_snapshot_cache(video_id,note_name):
