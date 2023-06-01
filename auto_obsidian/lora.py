@@ -66,13 +66,15 @@ def get_tokenizer(base_model_name):
     try:
         tokenizer = AutoTokenizer.from_pretrained(
             base_model_name,
-            trust_remote_code=True
+            trust_remote_code=True,
+            cache_dir=LLM_FOLDER
         )
     except Exception as e:
         if 'LLaMATokenizer' in str(e) or 'LLamaTokenizer' in str(e):
             tokenizer = LlamaTokenizer.from_pretrained(
                 base_model_name,
-                trust_remote_code=True
+                trust_remote_code=True,
+                cache_dir=LLM_FOLDER
             )
         else:
             raise e
