@@ -7,7 +7,7 @@ Auto Obsidian is a tool that helps you to keep up with the latest technologies a
 - [x] Create links between notes
 - [x] Create chapters for youtube tutorials with marked timed urls
 - [ ] Group notes by classes
-- [ ] Self train LLM without GPT (Able to be totally Free of Charge finally)
+- [x] Self train LLM without GPT (Able to be totally Free of Charge finally)
 ## Quick Usage
 ~~~shell
 # Install auto_obsidian with pip
