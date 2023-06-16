@@ -3,7 +3,7 @@ audios
 videos
 sites_cards_backup
 .env
-chat_cache
+llm_response_cache
 notes_backup
 obsidian_notes
 articles

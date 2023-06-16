@@ -8,3 +8,4 @@ inflect
 psutil
 pynvml
 peft
+git+https://github.com/zeuscsc/llm_picker.git

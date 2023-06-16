@@ -2,8 +2,9 @@ import json
 import re
 import os
 
+from llm_picker.llm import get_best_available_llm
+
 from .folders import NOTES_FOLDER,ARTICLES_INDEXES_JSON_FILE_PATH
-from .llm import LLM,get_best_available_llm
 from .yt2txt import extract_video_id
 
 ARTICLES2NOTE_INSTRUCTION="""You are a scholars that is taking markdown notes about some video with Wiki style, you would be giving some written scripts for the task.
